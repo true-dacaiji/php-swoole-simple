@@ -47,5 +47,10 @@ class test extends Controller
         $this->input['data'] = ['status' => 0,'msg' => 'success','data' => '已经执行'];
         $this->response->send($this->input);
     }
+
+    public function testDate(){
+        $result = ['status' => 0,'msg' => 'success','data' => date("Y-m-d H:i:s")];
+        $this->response->send($result,$this->input['controller'],$this->input['action']);
+    }
 }
 

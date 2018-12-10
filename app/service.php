@@ -33,8 +33,6 @@ class service
             $config['server']['daemonize'] = 1;
         }
 
-        # 加载链接池
-        #$this->loadPool();
         $this->server->set($config['server']);
         foreach ($config['system']['event'] as $event => $item){
             $eventObj = new $item['class'];
