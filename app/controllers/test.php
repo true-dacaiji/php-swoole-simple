@@ -2,6 +2,7 @@
 namespace app\controllers;
 
 use app\servers\controllers\Controller;
+use app\servers\exception\EchoException;
 use app\tasks\TestTask;
 
 class test extends Controller
@@ -51,6 +52,17 @@ class test extends Controller
     public function testDate(){
         $result = ['status' => 0,'msg' => 'success','data' => date("Y-m-d H:i:s")];
         $this->response->send($result,$this->input['controller'],$this->input['action']);
+    }
+
+    public function testBegin(){
+        $this->db->onBegin(function (){
+            $sql = "insert into test(test) values('bbbb')";
+            $res = $this->db->query($sql);
+            $this->response->send($res,$this->input['controller'],$this->input['action']);
+            throw new \Exception("回滚测试");
+        },function ($client,$e){
+            echo $e->getMessage()."\n";
+        });
     }
 }
 
