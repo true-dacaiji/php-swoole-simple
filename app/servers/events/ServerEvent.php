@@ -36,7 +36,7 @@ class ServerEvent extends Event
                 unset($this->inputBufferMap[$fd]);
                 throw new EchoException("解包失败------\n".$this->inputBufferMap[$fd]['data']);
             }
-
+            unset($this->inputBufferMap[$fd]);
             $controllerNamespace = '\\app\\controllers\\'.$input['controller'];
             $controller = ObjectHelper::directLoad($controllerNamespace)->init($server,$fd,$reactor_id,$input);
             $controller->{$input['action']}();
